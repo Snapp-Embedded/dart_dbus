@@ -3,10 +3,10 @@ import 'package:dbus/dbus.dart';
 Future<void> main() async {
   final client = DBusClient.session();
   final object = DBusRemoteObject(client,
-      name: 'com.example.SampleService', path: DBusObjectPath('/SomeObject'));
+      name: 'de.snapp.CoSensorService', path: DBusObjectPath('/Sensor'));
 
   final response = await object.callMethod(
-      'com.example.SampleInterface', 'GetSensorValue', [],
+      'de.snapp.SensorInterface', 'GetSensorValue', [],
       replySignature: DBusSignature('as'));
 
   /// convert DBusArray to List
@@ -14,11 +14,11 @@ Future<void> main() async {
 
   final temp = result[0];
   final hum = result[1];
-  final pressure = result[2];
+  final co2 = result[2];
 
   print('temp: $temp');
   print('hum: $hum');
-  print('pressure: $pressure');
+  print('co2: $co2');
 
   await client.close();
 }
